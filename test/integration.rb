@@ -1270,5 +1270,13 @@ module Spreadsheet
       target = File.join @var, 'test_changes.xls'
       assert_nothing_raised do book.write target end
     end
+    def test_special_chars
+      book = Spreadsheet::Workbook.new
+      sheet = book.create_worksheet
+      (0..200).each { |i| sheet.row(i).push "Ã«Ã§Ã¡Ã©Ã­Ã³Ãº" }
+      assert_nothing_raised do 
+      book.write StringIO.new("", "w+") 
+      end
+    end
   end
 end
